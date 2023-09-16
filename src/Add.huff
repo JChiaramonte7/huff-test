@@ -1,0 +1,8 @@
+#define macro MAIN() = takes(0) returns(0) {
+    0x04 calldataload // 0x04 to skip prefixed function selector
+    0x24 calldataload
+    add
+
+    0x00 mstore
+    0x20 0x00 return
+}
