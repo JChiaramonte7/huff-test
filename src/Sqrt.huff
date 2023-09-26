@@ -1,0 +1,57 @@
+/* Reference Implementation
+PUSH1 0x0
+CALLDATALOAD
+PUSH1 0x1
+JUMPDEST
+DUP2
+DUP2
+EQ
+PUSH2 0x1a
+JUMPI
+ADD
+PUSH1 0x2
+SWAP1
+DIV
+DUP1
+PUSH1 0x0
+CALLDATALOAD
+DIV
+PUSH1 0x5
+JUMP
+JUMPDEST
+
+PUSH1 0x0
+MSTORE
+PUSH1 0x20
+PUSH1 0x0
+RETURN
+*/
+
+#define macro MAIN() = takes(0) returns(0) {
+    0x4 calldataload // 0x04 to skip prefixed function selector
+    0x1
+    
+    iterate:
+        LOOP()
+
+    finish:
+        0x00 mstore
+        0x20 0x00 return
+}
+
+#define macro LOOP() = takes(2) returns(1) {
+    dup2
+    dup2
+    eq
+    finish jumpi
+
+    add
+    0x2
+    swap1
+    div
+    dup1
+    0x4 calldataload
+    div
+
+    iterate jump
+}
